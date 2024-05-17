@@ -100,7 +100,7 @@ function jogar(){
 }
 
 function jogarEmVolta(posX, posY){
-    var direcao = direcao()
+    var direcao = direcao();
 
     if(direcao[0] == 'y'){
         if(direcao[1] == 1){
