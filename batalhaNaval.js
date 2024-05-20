@@ -101,9 +101,13 @@ function jogar(){
     }
 }
 
+var intervalJogarVolta = null;
+
 function jogarEmVolta(posX, posY){
     let direc = direcao();
     let map = [];
+    let i = 0;
+
     //console.log(direc);
     if(direc[0] == 'y'){
         if(direc[1] == 1){
@@ -122,10 +126,13 @@ function jogarEmVolta(posX, posY){
             //console.log('4', map);
         }
     }
-    
-    console.log(map);
 
-    for(var i = 0; i < map.length; i++){
+
+    //console.log(map);
+
+    intervalJogarVolta = setInterval(function(){
+        var falgAchou = false;
+
         if(map[i][0] == 'y'){
             //console.log(posY + map[i][1], posY + map[i][1] , posY + map[i][1])
 
@@ -134,6 +141,7 @@ function jogarEmVolta(posX, posY){
                 jogadagas++
                 if(mapaIA[posY + map[i][1]][posX] != 0){
                     console.log("Acertou!!! y ");
+                    falgAchou = true;
                 } else {
                     console.log("Errou!!!");
                 }
@@ -144,12 +152,21 @@ function jogarEmVolta(posX, posY){
                 jogadagas++
                 if(mapaIA[posY][posX + map[i][1]] != 0){
                     console.log("Acertou!!! x ");
+                    falgAchou = true;
                 } else {
                     console.log("Errou!!!");
                 }
             }
         }
-    }
+            
+        i++
+        if(i >= 4) clearInterval(intervalJogarVolta);
+        
+    }, 1000)
+
+  
+        
+    
 }
 
 var interval = null;
