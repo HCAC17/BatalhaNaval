@@ -91,6 +91,8 @@ function jogar(){
         mapaJogadas[posY][posX] = 1;
         if(mapaIA[posY][posX] != 0){
             console.log("Acertou!!!");
+            jogarEmVolta(posX,posY);
+            clearInterval(interval);
         } else {
             console.log("Errou!!!");
         }
@@ -100,38 +102,54 @@ function jogar(){
 }
 
 function jogarEmVolta(posX, posY){
-    var direcao = direcao();
-
-    if(direcao[0] == 'y'){
-        if(direcao[1] == 1){
-            direcao = [['y',1],['x',-1],['y',-1],['x',1]]
+    let direc = direcao();
+    let map = [];
+    //console.log(direc);
+    if(direc[0] == 'y'){
+        if(direc[1] == 1){
+            map = [['y',1],['x',-1],['y',-1],['x',1]];
+            //console.log('1', map);
         }else{
-            direcao = [['y',-1],['x',1],['y',1],['x',-1]]
+            map = [['y',-1],['x',1],['y',1],['x',-1]];
+            //console.log('2', map);
         }
     }else{
-        if(direcao[1] == 1){
-            direcao = [['x',1],['y',-1],['x',-1],['y',1]]
+        if(direc[1] == 1){
+            map = [['x',1],['y',-1],['x',-1],['y',1]];
+            //console.log('3', map);
         }else{
-            direcao = [['x',-1],['y',1],['x',1],['y',-1]]
+            map = [['x',-1],['y',1],['x',1],['y',-1]];
+            //console.log('4', map);
         }
     }
+    
+    console.log(map);
 
-    for(var i = 0; i < 4; i++){
-        if(direcao[i][0] = 'y'){
-            if(posY + direcao[i][1] >= 0 || posY + direcao[i][1] <= 9 && mapaJogadas[posY + direcao[i][1]][posX] == 0){
-                
-            }else{
-                
+    for(var i = 0; i < map.length; i++){
+        if(map[i][0] == 'y'){
+            //console.log(posY + map[i][1], posY + map[i][1] , posY + map[i][1])
+
+            if(posY + map[i][1] >= 0 && posY + map[i][1] <= 9 && mapaJogadas[posY + map[i][1]][posX] == 0){
+                mapaJogadas[posY][posX] = 1;
+                jogadagas++
+                if(mapaIA[posY + map[i][1]][posX] != 0){
+                    console.log("Acertou!!! y ");
+                } else {
+                    console.log("Errou!!!");
+                }
             }
         }else{
-            if(posX + direcao[i][1] >= 0 || posX + direcao[i][1] <= 9 && mapaJogadas[posY][posX + direcao[i][1]] == 0){
-                
-            }else{
-
+            if(posX + map[i][1] >= 0 && posX + map[i][1] <= 9 && mapaJogadas[posY][posX + map[i][1]] == 0){
+                mapaJogadas[posY][posX] = 1;
+                jogadagas++
+                if(mapaIA[posY][posX + map[i][1]] != 0){
+                    console.log("Acertou!!! x ");
+                } else {
+                    console.log("Errou!!!");
+                }
             }
         }
     }
-
 }
 
 var interval = null;
@@ -149,7 +167,7 @@ var starGame = function(){
         }
         
         jogar();
-    }, 100)
+    }, 1000)
 }
 
 setTimeout(function(){
