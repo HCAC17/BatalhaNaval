@@ -4,6 +4,7 @@ var linhasEcolunas = 10;
 
 for(var i = 0; i < linhasEcolunas; i++){
     var coluna = document.createElement('div');
+    coluna.setAttribute('class', 'colunas');
     divBox.appendChild(coluna);
 
     for(var j = 0; j < linhasEcolunas; j++){
