@@ -5,8 +5,13 @@
     box-sizing: border-box;
 }
 
-body {
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: gray;
+    gap: 2rem;
+    height: 100vh;
 }
 
 #box, #caixa {
@@ -15,9 +20,9 @@ body {
     width: 38vw;
     height: 50vh;
     border: 1px solid red;
-    margin: 0 auto;
     padding: .5rem 0;
     gap: .2rem;
+    background: white;
 }
 
 .colunas {
@@ -29,7 +34,6 @@ body {
 }
 
 .linhas {
-    color: white;
     height: 9.5%;
     background-repeat: no-repeat;
     background-size: cover;
