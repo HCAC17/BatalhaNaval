@@ -1,4 +1,4 @@
-
+var divBox = document.getElementById('box');
 
 let embarcacao = [
     [4,1,'p'],
@@ -90,10 +90,12 @@ function jogar(){
     if(mapaJogadas[posY][posX] == 0){
         mapaJogadas[posY][posX] = 1;
         if(mapaIA[posY][posX] != 0){
+            divBox.children[posY].children[posX].style.backgroundColor = 'green';
             console.log("Acertou!!!");
             jogarEmVolta(posX,posY);
             clearInterval(interval);
         } else {
+            divBox.children[posY].children[posX].style.backgroundColor = 'red';
             console.log("Errou!!!");
         }
     } else {
@@ -107,7 +109,8 @@ function jogarEmVolta(posX, posY){
     let direc = direcao();
     let map = [];
     let i = 0;
-
+    let backUp = [];
+    let ajuste = 0;
     //console.log(direc);
     if(direc[0] == 'y'){
         if(direc[1] == 1){
@@ -127,8 +130,13 @@ function jogarEmVolta(posX, posY){
         }
     }
 
-
-    //console.log(map);
+    for(var j = 0; j < map.length; j++){
+        if(mapaJogadas[posY + map[j][1]][posX] == 0 && mapaJogadas[posY][posX + map[j][1]] == 0){
+            backUp[ajuste] = map[j]
+            ajuste++
+        }
+        //console.log(backUp + " backup", posY + map[j][1], posX, ' ', posY, posX + map[j][1], mapaJogadas);
+    }
 
     intervalJogarVolta = setInterval(function(){
         var falgAchou = false;
@@ -140,9 +148,11 @@ function jogarEmVolta(posX, posY){
                 mapaJogadas[posY][posX] = 1;
                 jogadagas++
                 if(mapaIA[posY + map[i][1]][posX] != 0){
+                    divBox.children[posY + map[i][1]].children[posX].style.backgroundColor = 'green';
                     console.log("Acertou!!! y ");
                     falgAchou = true;
                 } else {
+                    divBox.children[posY + map[i][1]].children[posX].style.backgroundColor = 'red';
                     console.log("Errou!!!");
                 }
             }
@@ -151,9 +161,11 @@ function jogarEmVolta(posX, posY){
                 mapaJogadas[posY][posX] = 1;
                 jogadagas++
                 if(mapaIA[posY][posX + map[i][1]] != 0){
+                    divBox.children[posY].children[posX + map[i][1]].style.backgroundColor = 'green';
                     console.log("Acertou!!! x ");
                     falgAchou = true;
                 } else {
+                    divBox.children[posY].children[posX + map[i][1]].style.backgroundColor = 'red';
                     console.log("Errou!!!");
                 }
             }
@@ -220,4 +232,3 @@ while(true){
     }
 }
 */
-
