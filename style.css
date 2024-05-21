@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+header p {
+    text-align: center;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -12,6 +16,7 @@ main {
     background-color: gray;
     gap: 2rem;
     height: 100vh;
+    padding: 2rem;
 }
 
 #box, #caixa {
@@ -44,10 +49,11 @@ main {
 @media screen and (max-width: 1020px) {
     main {
         flex-direction: column;
+        height: auto;
     }
     
     #box, #caixa {
-        width: 85%;
+        width: 85vw;
         height: 50vh;
         padding: .3rem 0;
     }
