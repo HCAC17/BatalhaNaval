@@ -159,9 +159,8 @@ function jogarEmVolta(posY, posX){
                     divBox.children[posX + map[i][1] + mapBackup].children[posY].style.backgroundColor = 'red';
                     console.log("Errou!!!");
                     if(flagAchou){
-                        i += 2
                         mapBackup = 0;
-                        flagAchou = false;
+                        map[i][1] *= -1;
                     }
                 }
             }
@@ -179,9 +178,8 @@ function jogarEmVolta(posY, posX){
                     divBox.children[posX].children[posY + map[i][1] + mapBackup].style.backgroundColor = 'red';
                     console.log("Errou!!!");
                     if(flagAchou){
-                        i += 2
                         mapBackup = 0;
-                        flagAchou = false;
+                        map[i][1] *= -1;
                     }
                 }
             }
