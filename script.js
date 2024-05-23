@@ -1,4 +1,4 @@
-var classe = ['caixa', 'box'];
+var classe = ['box'];
 var linhasEcolunas = 10;
 
 for(var a = 0; a < classe.length; a++){

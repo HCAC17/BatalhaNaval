@@ -83,19 +83,19 @@ var mapaIA = posicionarEmbarcacoes(embarcacao);
 var mapaJogadas = matrizMap();
 //var cont = 0;
 function jogar(){
-    var posX = numeroAleatorio(10);
     var posY = numeroAleatorio(10);
+    var posX = numeroAleatorio(10);
     //cont++
     //console.log(cont);
-    if(mapaJogadas[posY][posX] == 0){
-        mapaJogadas[posY][posX] = 1;
-        if(mapaIA[posY][posX] != 0){
-            divBox.children[posY].children[posX].style.backgroundColor = 'green';
+    if(mapaJogadas[posX][posY] == 0){
+        mapaJogadas[posX][posY] = 1;
+        if(mapaIA[posX][posY] != 0){
+            divBox.children[posX].children[posY].style.backgroundColor = 'green';
             console.log("Acertou!!!");
-            jogarEmVolta(posX,posY);
+            jogarEmVolta(posY,posX);
             clearInterval(interval);
         } else {
-            divBox.children[posY].children[posX].style.backgroundColor = 'red';
+            divBox.children[posX].children[posY].style.backgroundColor = 'red';
             console.log("Errou!!!");
         }
     } else {
@@ -105,13 +105,15 @@ function jogar(){
 
 var intervalJogarVolta = null;
 
-function jogarEmVolta(posX, posY){
+function jogarEmVolta(posY, posX){
     let direc = direcao();
     let map = [];
     let i = 0;
     let backUp = [];
     let ajuste = 0;
-    //console.log(direc);
+    let mapBackup = 0;
+    
+    console.log(posX, posY);
     if(direc[0] == 'y'){
         if(direc[1] == 1){
             map = [['y',1],['x',-1],['y',-1],['x',1]];
@@ -131,48 +133,68 @@ function jogarEmVolta(posX, posY){
     }
 
     for(var j = 0; j < map.length; j++){
-        if(mapaJogadas[posY + map[j][1]][posX] == 0 && mapaJogadas[posY][posX + map[j][1]] == 0){
+        if(mapaJogadas[posX + map[j][1]][posY] == 0 && mapaJogadas[posX][posY + map[j][1]] == 0){
             backUp[ajuste] = map[j]
             ajuste++
         }
-        //console.log(backUp + " backup", posY + map[j][1], posX, ' ', posY, posX + map[j][1], mapaJogadas);
+        //console.log(backUp + " backup", posX + map[j][1], posY, ' ', posX, posY + map[j][1], mapaJogadas);
     }
 
+    map = backUp;
+    console.log(map);
     intervalJogarVolta = setInterval(function(){
-        var falgAchou = false;
+        var flagAchou = false;
 
         if(map[i][0] == 'y'){
-            //console.log(posY + map[i][1], posY + map[i][1] , posY + map[i][1])
+            //console.log(posX + map[i][1], posX + map[i][1] , posX + map[i][1])
 
-            if(posY + map[i][1] >= 0 && posY + map[i][1] <= 9 && mapaJogadas[posY + map[i][1]][posX] == 0){
-                mapaJogadas[posY][posX] = 1;
-                jogadagas++
-                if(mapaIA[posY + map[i][1]][posX] != 0){
-                    divBox.children[posY + map[i][1]].children[posX].style.backgroundColor = 'green';
-                    console.log("Acertou!!! y ");
-                    falgAchou = true;
-                } else {
-                    divBox.children[posY + map[i][1]].children[posX].style.backgroundColor = 'red';
-                    console.log("Errou!!!");
-                }
-            }
-        }else{
-            if(posX + map[i][1] >= 0 && posX + map[i][1] <= 9 && mapaJogadas[posY][posX + map[i][1]] == 0){
-                mapaJogadas[posY][posX] = 1;
-                jogadagas++
-                if(mapaIA[posY][posX + map[i][1]] != 0){
-                    divBox.children[posY].children[posX + map[i][1]].style.backgroundColor = 'green';
+            if(posX + map[i][1] + mapBackup >= 0 && posX + map[i][1] + mapBackup <= 9 && mapaJogadas[posX + map[i][1] + mapBackup][posY] == 0){
+                mapaJogadas[posX + map[i][1] + mapBackup][posY] = 1;
+                jogadagas++;
+                if(mapaIA[posX + map[i][1] + mapBackup][posY] != 0){
+                    divBox.children[posX + map[i][1] + mapBackup].children[posY].style.backgroundColor = 'green';
                     console.log("Acertou!!! x ");
-                    falgAchou = true;
+                    flagAchou = true;
                 } else {
-                    divBox.children[posY].children[posX + map[i][1]].style.backgroundColor = 'red';
+                    divBox.children[posX + map[i][1] + mapBackup].children[posY].style.backgroundColor = 'red';
                     console.log("Errou!!!");
+                    if(flagAchou){
+                        i += 2
+                        mapBackup = 0;
+                        flagAchou = false;
+                    }
                 }
             }
+            console.log(posX, posY + map[i][1] + mapBackup, i, map[i], mapBackup, flagAchou);
+
+        }else{
+            if(posY + map[i][1] + mapBackup >= 0 && posY + map[i][1] + mapBackup <= 9 && mapaJogadas[posX][posY + map[i][1] + mapBackup] == 0){
+                mapaJogadas[posX][posY + map[i][1] + mapBackup] = 1;
+                jogadagas++;
+                if(mapaIA[posX][posY + map[i][1] + mapBackup] != 0){
+                    divBox.children[posX].children[posY + map[i][1] + mapBackup].style.backgroundColor = 'green';
+                    console.log("Acertou!!! y ");
+                    flagAchou = true;
+                } else {
+                    divBox.children[posX].children[posY + map[i][1] + mapBackup].style.backgroundColor = 'red';
+                    console.log("Errou!!!");
+                    if(flagAchou){
+                        i += 2
+                        mapBackup = 0;
+                        flagAchou = false;
+                    }
+                }
+            }
+            console.log(posX + map[i][1] + mapBackup, posY, i, map[i], mapBackup, flagAchou);
         }
-            
-        i++
-        if(i >= 4) clearInterval(intervalJogarVolta);
+        
+        if(flagAchou){
+            mapBackup += map[i][1];
+        } else {
+            i++
+        }
+
+        if(i >= map.length) clearInterval(intervalJogarVolta);
         
     }, 1000)
 
